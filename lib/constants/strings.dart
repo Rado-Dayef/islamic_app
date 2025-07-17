@@ -3,5 +3,6 @@ class AppStrings {
 
   /// Routes
   static const String homeRoute = "/home";
+  static const String suraRoute = "/sura";
   static const String splashRoute = "/splash";
 }

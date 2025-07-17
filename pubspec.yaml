@@ -12,11 +12,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.8
-  prayers_times: ^0.0.6
   quran: ^1.3.3
   intl: ^0.20.2
   jhijri: ^1.0.0
+  flutter_bloc: ^9.1.1
+  prayers_times: ^0.0.6
+  cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
