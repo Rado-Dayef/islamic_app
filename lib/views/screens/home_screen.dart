@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:islamic_app/constants/colors.dart';
 import 'package:islamic_app/constants/extensions.dart';
-import 'package:jhijri/_src/_jHijri.dart';
+import 'package:islamic_app/constants/strings.dart';
+import 'package:islamic_app/controllers/home_cubit/home_cubit.dart';
+import 'package:islamic_app/controllers/quran_cubit/quran_cubit.dart';
+import 'package:islamic_app/models/sura_model.dart';
+import 'package:islamic_app/views/widgets/sura_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,17 +17,45 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: 10.edgeInsetsAll,
-          child: Column(
-            children: [
-              Row(
+          child: BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) {
+              return Column(
                 children: [
-                  Expanded(flex: 0, child: Text(DateFormat("dd/MM/yyyy").format(DateTime.now()), style: TextStyle(fontSize: 30))),
-                  Spacer(),
-                  Expanded(flex: 0, child: Text("${JHijri.now().day}/${JHijri.now().month}/${JHijri.now().year}", style: TextStyle(fontSize: 30))),
+                  Row(
+                    children: [
+                      Expanded(flex: 0, child: Text(state.meladyDate, style: TextStyle(fontSize: 30))),
+                      Spacer(),
+                      Expanded(flex: 0, child: Text(state.hijriDate, style: TextStyle(fontSize: 30))),
+                    ],
+                  ),
+                  Text(state.day, style: TextStyle(fontSize: 60)),
+                  BlocBuilder<QuranCubit, QuranState>(
+                    builder: (context, state) {
+                      if (state is QuranLoading) {
+                        return CircularProgressIndicator();
+                      } else if (state is QuranException) {
+                        return Text(state.message, style: TextStyle(fontSize: 40));
+                      } else if (state is QuranLoaded) {
+                        return ListView.separated(
+                          itemCount: state.suras.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (_, int index) {
+                            SuraModel sura = state.suras[index];
+                            return SuraWidget(sura);
+                          },
+                          separatorBuilder: (_, __) {
+                            return 10.gap;
+                          },
+                        );
+                      } else {
+                        return Text("Unknown Error", style: TextStyle(fontSize: 40));
+                      }
+                    },
+                  ),
                 ],
-              ),
-              Text("الاحد", style: TextStyle(fontSize: 60)),
-            ],
+              );
+            },
           ),
         ),
       ),

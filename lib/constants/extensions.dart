@@ -6,4 +6,7 @@ extension NumExtension on num {
 
   /// EdgeInsets
   EdgeInsets get edgeInsetsAll => EdgeInsets.all(toDouble());
+
+  /// BorderRadius
+  BorderRadius get borderRadiusAll => BorderRadius.circular(toDouble());
 }
