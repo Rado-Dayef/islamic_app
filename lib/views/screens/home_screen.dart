@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:islamic_app/constants/colors.dart';
 import 'package:islamic_app/constants/extensions.dart';
 import 'package:islamic_app/constants/strings.dart';
 import 'package:islamic_app/controllers/home_cubit/home_cubit.dart';
 import 'package:islamic_app/controllers/quran_cubit/quran_cubit.dart';
 import 'package:islamic_app/models/sura_model.dart';
-import 'package:islamic_app/views/widgets/sura_widget.dart';
+import 'package:islamic_app/views/widgets/app_main_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,7 +27,12 @@ class HomeScreen extends StatelessWidget {
                       Expanded(flex: 0, child: Text(state.hijriDate, style: TextStyle(fontSize: 30))),
                     ],
                   ),
-                  Text(state.day, style: TextStyle(fontSize: 60)),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(AppStrings.prayerRoute);
+                    },
+                    child: Text(state.day, style: TextStyle(fontSize: 60)),
+                  ),
                   BlocBuilder<QuranCubit, QuranState>(
                     builder: (context, state) {
                       if (state is QuranLoading) {
@@ -42,7 +46,14 @@ class HomeScreen extends StatelessWidget {
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (_, int index) {
                             SuraModel sura = state.suras[index];
-                            return SuraWidget(sura);
+                            return AppMainWidget(
+                              sura.name,
+                              leading: sura.number.toString(),
+                              trailing: sura.verseCount.toString(),
+                              onTap: () {
+                                Navigator.of(context).pushNamed(AppStrings.suraRoute, arguments: sura);
+                              },
+                            );
                           },
                           separatorBuilder: (_, __) {
                             return 10.gap;
