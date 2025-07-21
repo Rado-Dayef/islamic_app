@@ -5,6 +5,7 @@ import 'package:islamic_app/controllers/home_cubit/home_cubit.dart';
 import 'package:islamic_app/controllers/quran_cubit/quran_cubit.dart';
 import 'package:islamic_app/controllers/sura_cubit/sura_cubit.dart';
 import 'package:islamic_app/views/screens/home_screen.dart';
+import 'package:islamic_app/views/screens/prayer_screen.dart';
 import 'package:islamic_app/views/screens/splash_screen.dart';
 import 'package:islamic_app/views/screens/sura_screen.dart';
 
@@ -23,7 +24,12 @@ class App extends StatelessWidget {
         title: AppStrings.appName,
         initialRoute: AppStrings.homeRoute,
         theme: ThemeData(fontFamily: "Arabic"),
-        routes: {AppStrings.homeRoute: (context) => HomeScreen(), AppStrings.suraRoute: (context) => SuraScreen(), AppStrings.splashRoute: (context) => SplashScreen()},
+        routes: {
+          AppStrings.homeRoute: (context) => HomeScreen(),
+          AppStrings.suraRoute: (context) => SuraScreen(),
+          AppStrings.splashRoute: (context) => SplashScreen(),
+          AppStrings.prayerRoute: (context) => PrayerScreen(),
+        },
       ),
     );
   }
