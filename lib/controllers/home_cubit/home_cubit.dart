@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:islamic_app/constants/strings.dart';
+import 'package:islamic_app/models/home_categories_model.dart';
 import 'package:jhijri/_src/_jHijri.dart';
 
 part 'home_state.dart';
@@ -16,7 +18,7 @@ class HomeCubit extends Cubit<HomeState> {
     String day = getDay(meladyDateNow.weekday);
     String meladyDate = DateFormat("dd/MM/yyyy").format(DateTime.now());
     String hijriDate = "${hijriDateNow.day}/${hijriDateNow.month}/${hijriDateNow.year}";
-    HomeLoaded newState = HomeLoaded(day: day, hijriDate: hijriDate, meladyDate: meladyDate);
+    HomeLoaded newState = HomeLoaded(day: day, hijriDate: hijriDate, meladyDate: meladyDate,categories: state.categories);
     emit(newState);
   }
 
